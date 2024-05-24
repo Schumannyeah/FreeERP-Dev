@@ -1,0 +1,57 @@
+.rowOk{
+  background-color:#8bc34a;
+ }
+ .rowAttention{
+   background-color: #ffc107;
+ }
+ .rowWarning{
+  background-color:#ff9800;
+ }
+ .rowDangerous{
+  background-color:#f44336;
+ }
+ .rowDone{
+  background-color: #8bc34a;
+ }
+ .rowOnhold{
+  background-color: #bababa;
+ }
+ .rowNotADate{
+  background-color: 	#e91e63;
+ }
+ .rowLightSkyBlue{
+  background-color:  lightskyblue;
+ }
+ .rowTeal{
+  background-color:  #009688;
+ }
+
+
+td.details-control {
+  background: url('../res/details_open.png') no-repeat center center;
+  cursor: pointer;
+}
+tr.shown td.details-control {
+  background: url('../res/details_close.png') no-repeat center center;
+}
+
+.mesfixedcol {
+  background-color: whitesmoke !important;
+}
+
+td {
+  background: whitesmoke;
+}
+
+tfoot input {
+  width: 100%;
+  padding: 3px;
+  box-sizing: border-box;
+  font-style: normal;
+  font-weight: normal;
+  background-color: whitesmoke;
+}
+
+td.highlight {
+  background-color: whitesmoke !important;
+}

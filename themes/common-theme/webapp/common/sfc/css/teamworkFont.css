@@ -1,0 +1,16 @@
+
+@font-face {
+    font-family: 'TeamworkRegular';
+    src: url('/common/sfc/res/teamwork-regular-webfont.eot');
+    src: url('/common/sfc/res/teamwork-regular-webfont.eot?#iefix') format('embedded-opentype'),
+    url('/common/sfc/res/teamwork-regular-webfont.woff') format('woff'),
+    url('/common/sfc/res/teamwork-regular-webfont.ttf') format('truetype'),
+    url('/common/sfc/res/teamwork-regular-webfont.otf') format('opentype'),
+    url('/common/sfc/res/teamwork-regular-webfont.svg#TeamworkRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
