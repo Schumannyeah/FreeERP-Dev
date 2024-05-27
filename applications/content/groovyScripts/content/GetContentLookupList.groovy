@@ -61,6 +61,7 @@ while (fieldIterator.hasNext()) {
         }
     }
 }
+
 if (errMsgList) {
     request.setAttribute("_ERROR_MESSAGE_LIST_", errMsgList)
 }
