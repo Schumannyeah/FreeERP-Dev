@@ -130,6 +130,9 @@ public class ControlServlet extends HttpServlet {
             timer.setLog(true);
             timer.timerString("[" + rname + "(Domain:" + request.getScheme() + "://" + request.getServerName() + ")] Request Begun, encoding=[" + charset + "]", module);
         }
+        // Schumann
+        // request.getScheme() returns https
+        // request.getServerName() returns localhost
 
         // Setup the CONTROL_PATH for JSP dispatching.
         String contextPath = request.getContextPath();
@@ -137,6 +140,12 @@ public class ControlServlet extends HttpServlet {
             contextPath = "";
         }
         request.setAttribute("_CONTROL_PATH_", contextPath + request.getServletPath());
+        // Schumann:
+        // For the link: https://localhost/content/control/navigateDataResource
+        // contextPath is "content"
+        // servletPath is "control"
+        // then the _CONTROL_PATH_ is set as /content/control, it will automatically add / in front of it
+
         if (Debug.verboseOn()) {
              Debug.logVerbose("Control Path: " + request.getAttribute("_CONTROL_PATH_"), module);
         }
@@ -158,6 +167,9 @@ public class ControlServlet extends HttpServlet {
             // always put this in the session too so that session events can use the delegator
             session.setAttribute("delegatorName", delegator.getDelegatorName());
         }
+        // Schumann:
+        // delegatorName is "default"
+        // delegator like org.apache.ofbiz.entity.GenericDelegator@5c78d075
 
         LocalDispatcher dispatcher = (LocalDispatcher) session.getAttribute("dispatcher");
         if (dispatcher == null) {
@@ -167,6 +179,8 @@ public class ControlServlet extends HttpServlet {
             Debug.logError("[ControlServlet] ERROR: dispatcher not found in ServletContext", module);
         }
         request.setAttribute("dispatcher", dispatcher);
+        // Schumann:
+        // dispatcher is "org.apache.ofbiz.service.GenericDispatcherFactory$GenericDispatcher@887d97a"
 
         Security security = (Security) session.getAttribute("security");
         if (security == null) {
@@ -176,27 +190,49 @@ public class ControlServlet extends HttpServlet {
             Debug.logError("[ControlServlet] ERROR: security not found in ServletContext", module);
         }
         request.setAttribute("security", security);
+        // Schumann:
+        // security is "org.apache.ofbiz.security.SecurityFactory$OFBizSecurity@6cdf7e56"
 
         VisualTheme visualTheme = UtilHttp.getVisualTheme(request);
         if (visualTheme != null) {
             UtilHttp.setVisualTheme(request, visualTheme);
         }
+        // Schumann:
+        // visualTheme is "visual-theme-id:TOMAHAWK, display-name: Tomahawk, description: ${util:label('CommonEntityLabels', 'VisualTheme.description.TOMAHAWK', locale)}, screenshots: [/tomahawk/screenshot.jpg]"
 
         RequestHandler handler = RequestHandler.getRequestHandler(getServletContext());
         request.setAttribute("_REQUEST_HANDLER_", handler);
+        // Schumann:
+        // _REQUEST_HANDLER_ is "org.apache.ofbiz.webapp.control.RequestHandler@7b22e5a4"
         
         ServletContextHashModel ftlServletContext = new ServletContextHashModel(this, FreeMarkerWorker.getDefaultOfbizWrapper());
         request.setAttribute("ftlServletContext", ftlServletContext);
+        // Schumann:
+        // ftlServletContext is "freemarker.ext.servlet.ServletContextHashModel@79db3123"
 
         // setup some things that should always be there
         UtilHttp.setInitialRequestInfo(request);
         VisitHandler.getVisitor(request, response);
+        // Schumann:
+        // setInitialRequestInfo will set quite a lot of info as follows, which could be found at UtilHttp.setInitialRequestInfo()
+        // _WEBAPP_NAME_ is             e.g. content
+        // _CLIENT_LOCALE_ is           e.g. en_US
+        // _CLIENT_REQUEST_ is          e.g. https://localhost/content/control/findDataResource
+        // _CLIENT_USER_AGENT_ is       Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0
+        // _CLIENT_REFERER_ is          https://localhost/content/control/navigateDataResource
+        // _CLIENT_FORWARDED_FOR_ is    null
+        // _CLIENT_REMOTE_ADDR_ is      0:0:0:0:0:0:0:1
+        // _CLIENT_REMOTE_HOST_ is      0:0:0:0:0:0:0:1
+        // _CLIENT_REMOTE_USER_ is      null
 
         // set the Entity Engine user info if we have a userLogin
         String visitId = VisitHandler.getVisitId(session);
         if (UtilValidate.isNotEmpty(visitId)) {
             GenericDelegator.pushSessionIdentifier(visitId);
         }
+        // Schumann:
+        // visitId is
+        Debug.logInfo("visitId: " + visitId, module);
 
         // display details on the servlet objects
         if (Debug.verboseOn()) {

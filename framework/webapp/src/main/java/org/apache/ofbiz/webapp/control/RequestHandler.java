@@ -169,7 +169,10 @@ public class RequestHandler {
 
         this.trackServerHit = !"false".equalsIgnoreCase(context.getInitParameter("track-serverhit"));
         this.trackVisit = !"false".equalsIgnoreCase(context.getInitParameter("track-visit"));
-        
+
+        // Schumann
+        // this is to set the host-headers-allowed as defined in the security.properties like
+        // host-headers-allowed=localhost,127.0.0.1,demo-trunk.ofbiz.apache.org,demo-stable.ofbiz.apache.org,demo-next.ofbiz.apache.org
         hostHeadersAllowed = UtilMisc.getHostHeadersAllowed();
 
     }
@@ -246,7 +249,9 @@ public class RequestHandler {
             throw new RequestHandlerException("Domain " + request.getServerName() + " not accepted to prevent host header injection."
                     + " You need to set host-headers-allowed property in security.properties file.");
         }
-                
+
+        // Schumann
+        // the compareString "Y" means with EntityUtilProperties module, system is looking for any match in the entity "SYSTEM_PROPERTY"
         final boolean throwRequestHandlerExceptionOnMissingLocalRequest = EntityUtilProperties.propertyValueEqualsIgnoreCase(
                 "requestHandler", "throwRequestHandlerExceptionOnMissingLocalRequest", "Y", delegator);
         long startTime = System.currentTimeMillis();
